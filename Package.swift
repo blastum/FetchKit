@@ -4,21 +4,25 @@
 import PackageDescription
 
 let package = Package(
-    name: "JBNetKit",
+    name: "FetchKit",
+    platforms: [
+        .iOS(.v15), // or lower if needed
+        .macOS(.v12)
+    ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "JBNetKit",
-            targets: ["JBNetKit"]),
+            name: "FetchKit",
+            targets: ["FetchKit"]
+        )
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "JBNetKit"),
-        .testTarget(
-            name: "JBNetKitTests",
-            dependencies: ["JBNetKit"]
+            name: "FetchKit",
+            dependencies: []
         ),
+        .testTarget(
+            name: "FetchKitTests",
+            dependencies: ["FetchKit"]
+        )
     ]
 )
