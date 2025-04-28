@@ -5,9 +5,14 @@
 //  Created by James Blasius on 4/27/25.
 //
 
+
 import Foundation
 
-public final class NetworkService {
+public protocol NetworkServiceProtocol {
+    func fetch<E: Endpoint>(_ endpoint: E) async -> Result<E.Output, Error>
+}
+
+public final class NetworkService: NetworkServiceProtocol {
     private let session: URLSessionProtocol
 
     public init(session: URLSessionProtocol = URLSession.shared) {
