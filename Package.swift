@@ -7,7 +7,7 @@ let package = Package(
     name: "FetchKit",
     platforms: [
         .iOS(.v15), // or lower if needed
-        .macOS(.v12)
+        .macOS(.v15)
     ],
     products: [
         .library(
