@@ -1,6 +1,6 @@
 //
 //  Endpoint.swift
-//  JBNetKit
+//  FetchKit
 //
 //  Created by James Blasius on 4/27/25.
 //
