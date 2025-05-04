@@ -9,7 +9,8 @@ import Foundation
 
 public protocol Endpoint {
     associatedtype Output
+    associatedtype Failure: Error
 
     var urlRequest: URLRequest { get }
-    func decode(_ data: Data) throws -> Output
+    func decode(_ result: Result<(Data, URLResponse), any Error>) -> Result<Output, Failure>
 }

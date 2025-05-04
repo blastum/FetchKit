@@ -9,26 +9,44 @@ import FetchKit
 import Foundation
 
 public enum TreasuryEndpoint: Endpoint {
+    public typealias Output = TreasuryResult
+    public typealias Failure = Error
+
     case security(id: String)
     case family(id: String)
 
     public var urlRequest: URLRequest {
         switch self {
-        case .security(let id):
+        case let .security(id):
             return URLRequest(url: URL(string: "https://api.treasury.gov/security/\(id)")!)
-        case .family(let id):
+        case let .family(id):
             return URLRequest(url: URL(string: "https://api.treasury.gov/family/\(id)")!)
         }
     }
 
-    public func decode(_ data: Data) throws -> TreasuryResult {
-        switch self {
-        case .security:
-            let security = try JSONDecoder().decode(Security.self, from: data)
-            return .security(security)
-        case .family:
-            let family = try JSONDecoder().decode(Family.self, from: data)
-            return .family(family)
+    public func decode(_ result: Result<(Data, URLResponse), any Error>) ->
+        Result<TreasuryResult, any Failure> {
+        switch result {
+        case let .success((data, _)):
+            do {
+                let security = try JSONDecoder().decode(Security.self, from: data)
+                return .success(.security(security))
+            } catch {
+                return .failure(error)
+            }
+        case let .failure(error):
+            return .failure(error)
         }
     }
+
+//    public func decode(_ data: Data) throws -> TreasuryResult {
+//        switch self {
+//        case .security:
+//            let security = try JSONDecoder().decode(Security.self, from: data)
+//            return .security(security)
+//        case .family:
+//            let family = try JSONDecoder().decode(Family.self, from: data)
+//            return .family(family)
+//        }
+//    }
 }

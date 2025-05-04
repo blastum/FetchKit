@@ -17,12 +17,12 @@ final class MockURLSession: URLSessionProtocol {
         self.handler = handler
     }
 
-    func data(for request: URLRequest) async throws -> (Data, URLResponse) {
+    func data(for request: URLRequest) async -> Result<(Data, URLResponse), Error> {
         switch handler(request) {
         case .success(let result):
-            return result
+            return .success(result)
         case .failure(let error):
-            throw error
+            return .failure(error)
         }
     }
 }

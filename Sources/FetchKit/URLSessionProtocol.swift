@@ -7,8 +7,20 @@
 
 import Foundation
 
+// MARK: - URLSessionProtocol
+
 public protocol URLSessionProtocol {
-    func data(for request: URLRequest) async throws -> (Data, URLResponse)
+    func data(for request: URLRequest) async -> Result<(Data, URLResponse), Error>
 }
 
-extension URLSession: URLSessionProtocol { }
+// MARK: - URLSession + URLSessionProtocol
+
+extension URLSession: URLSessionProtocol {
+    public func data(for request: URLRequest) async -> Result<(Data, URLResponse), Error> {
+        do {
+            return try .success(await data(for: request))
+        } catch {
+            return .failure(error)
+        }
+    }
+}
