@@ -19,7 +19,7 @@ jobs:
       - name: Get latest tag
         id: get_tag
         run: |
-          latest=$(git describe --tags --abbrev=0)
+          latest=$(git tag --sort=-v:refname | head -n 1)
           echo "Latest tag: $latest"
           echo "latest_tag=$latest" >> $GITHUB_OUTPUT
 
