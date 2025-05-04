@@ -38,15 +38,4 @@ public enum TreasuryEndpoint: Endpoint {
             return .failure(error)
         }
     }
-
-//    public func decode(_ data: Data) throws -> TreasuryResult {
-//        switch self {
-//        case .security:
-//            let security = try JSONDecoder().decode(Security.self, from: data)
-//            return .security(security)
-//        case .family:
-//            let family = try JSONDecoder().decode(Family.self, from: data)
-//            return .family(family)
-//        }
-//    }
 }
